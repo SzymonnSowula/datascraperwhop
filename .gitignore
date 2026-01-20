@@ -1,0 +1,17 @@
+# System Files
+.DS_Store
+Thumbs.db
+
+# Developer Tools
+.gemini/
+.agent/
+.vscode/
+
+# Local data & temp files
+*.log
+indexkopiahtml.html
+tmp/
+
+# Extension artifacts
+*.crx
+*.pem

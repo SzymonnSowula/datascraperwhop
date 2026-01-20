@@ -3,99 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meal Plan Scraper</title>
+  <title>Meal Scraper Pro</title>
   <link rel="stylesheet" href="popup.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
     <!-- Header -->
     <header class="header">
       <div class="logo">
-        <span class="logo-icon">🍽️</span>
-        <h1>Meal Plan Scraper</h1>
+        <span class="logo-icon">✨</span>
+        <h1>Meal Scraper Pro</h1>
       </div>
-      <p class="subtitle">PDF Export for FitOS</p>
+      <p class="subtitle">Precision extraction for FitOS</p>
     </header>
 
-    <!-- Status Section -->
+    <!-- Status -->
     <section class="status-section">
       <div class="status-indicator" id="statusIndicator">
         <span class="status-dot"></span>
-        <span class="status-text" id="statusText">Ready to scrape</span>
+        <span class="status-text" id="statusText">System ready</span>
       </div>
     </section>
 
     <!-- Actions -->
     <section class="actions">
-      <button class="btn btn-primary" id="scrapeBtn">
-        <span class="btn-icon">📋</span>
-        Scrape Page Data
+      <button class="btn btn-primary" id="scrapeBtn" style="width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        Analyze Page Data
       </button>
       
-      <button class="btn btn-secondary" id="previewBtn" disabled>
-        <span class="btn-icon">👁️</span>
-        Preview Data
-      </button>
-      
-      <button class="btn btn-success" id="exportBtn" disabled>
-        <span class="btn-icon">📄</span>
-        Export PDF
+      <button class="btn btn-secondary" id="exportBtn" disabled style="width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        Generate PDF Report
       </button>
 
-      <button class="btn btn-secondary" id="copyBtn" disabled style="margin-top: 10px;">
-        <span class="btn-icon">📋</span>
-        Copy Plan
+      <div class="secondary-actions">
+        <button class="btn btn-secondary" id="previewBtn" disabled title="Preview Data">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          Preview
+        </button>
+        
+        <button class="btn btn-secondary" id="copyBtn" disabled title="Copy to Clipboard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          Copy
+        </button>
+      </div>
+
+      <button class="btn btn-secondary" id="exportJsonBtn" disabled style="width: 100%;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        Clean JSON Export
       </button>
-
-      <button class="btn btn-json" id="exportJsonBtn" disabled style="margin-top: 10px;">
-        <span class="btn-icon">{}</span>
-        Export JSON
-      </button>
-    </section>
-
-    <!-- Data Preview -->
-    <section class="preview-section" id="previewSection" style="display: none;">
-      <div class="preview-header">
-        <h3>Data Preview</h3>
-        <button class="btn-close" id="closePreview">×</button>
-      </div>
-      <div class="preview-content" id="previewContent">
-        <!-- Preview data will be injected here -->
-      </div>
-    </section>
-
-    <!-- Settings -->
-    <section class="settings">
-      <h3>⚙️ Settings</h3>
-      
-      <div class="setting-group">
-        <label for="clientName">Client Name (optional):</label>
-        <input type="text" id="clientName" placeholder="Auto-detected from page...">
-      </div>
-      
-      <div class="setting-group">
-        <label for="waterGoal">Water Goal (liters):</label>
-        <input type="number" id="waterGoal" value="1" min="0.5" max="5" step="0.5">
-      </div>
-      
-      <div class="setting-group checkbox-group">
-        <label>
-          <input type="checkbox" id="includeNotes" checked>
-          Include meal notes
-        </label>
-      </div>
-      
-      <div class="setting-group checkbox-group">
-        <label>
-          <input type="checkbox" id="includeSwaps" checked>
-          Include Food Swaps Guide
-        </label>
-      </div>
     </section>
 
     <!-- Stats -->
     <section class="stats" id="statsSection" style="display: none;">
-      <h3>📊 Summary</h3>
+      <h3>Analysis Result</h3>
       <div class="stats-grid">
         <div class="stat-item">
           <span class="stat-value" id="statMeals">0</span>
@@ -103,7 +68,7 @@
         </div>
         <div class="stat-item">
           <span class="stat-value" id="statFoods">0</span>
-          <span class="stat-label">Foods</span>
+          <span class="stat-label">Items</span>
         </div>
         <div class="stat-item">
           <span class="stat-value" id="statCalories">0</span>
@@ -112,9 +77,49 @@
       </div>
     </section>
 
+    <!-- Configuration -->
+    <section class="settings">
+      <h3>Configuration</h3>
+      
+      <div class="setting-group">
+        <label>Client Reference</label>
+        <input type="text" id="clientName" placeholder="Identifying client...">
+      </div>
+      
+      <div class="setting-group">
+        <label>Hydration Goal (Gals)</label>
+        <input type="number" id="waterGoal" value="1" min="0.5" max="5" step="0.5">
+      </div>
+      
+      <div class="setting-group checkbox-group">
+        <label>
+          <input type="checkbox" id="includeNotes" checked>
+          Enable internal notes
+        </label>
+      </div>
+      
+      <div class="setting-group checkbox-group" id="swapsGroup">
+        <label>
+          <input type="checkbox" id="includeSwaps" checked>
+          Food swap guidance
+        </label>
+      </div>
+    </section>
+
+    <!-- Data Preview Overlay -->
+    <section class="preview-section" id="previewSection" style="display: none;">
+      <div class="preview-header">
+        <h3 style="color: white; font-size: 16px;">Data Preview</h3>
+        <button class="btn btn-secondary" id="closePreview" style="padding: 6px 12px; font-size: 18px;">&times;</button>
+      </div>
+      <div class="preview-content" id="previewContent">
+        <!-- Preview data injected here -->
+      </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
-      <p>v1.0.0 • Designed for FitOS Import</p>
+      <p>PRO ENGINE v1.1 • AG-7 ENHANCED</p>
     </footer>
   </div>
 

@@ -119,41 +119,42 @@ function renderPreview() {
   let html = '';
   
   // Client name
-  html += `<div style="margin-bottom: 16px; color: #818CF8; font-weight: 600;">
-    🍽️ ${scrapedData.clientName || 'Meal Plan'}
+  html += `<div style="margin-bottom: 20px; color: var(--accent); font-weight: 700; font-size: 16px;">
+    ${scrapedData.clientName || 'Meal Plan Analysis'}
   </div>`;
   
   // Day total
   if (scrapedData.dayTotal.calories > 0) {
-    html += `<div class="preview-macros" style="margin-bottom: 16px;">
-      📊 Day: ${scrapedData.dayTotal.calories} kcal | 
-      ${scrapedData.dayTotal.protein}P | 
-      ${scrapedData.dayTotal.carbs}C | 
-      ${scrapedData.dayTotal.fat}F
+    html += `<div class="preview-macros" style="margin-bottom: 24px; background: var(--accent-glow); border: 1px solid var(--accent); padding: 12px; border-radius: 8px;">
+      <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px;">Daily Target</div>
+      <div style="font-weight: 700; color: #fff; font-size: 14px;">
+        ${scrapedData.dayTotal.calories} kcal • ${scrapedData.dayTotal.protein}P • ${scrapedData.dayTotal.carbs}C • ${scrapedData.dayTotal.fat}F
+      </div>
     </div>`;
   }
   
   // Meals
   for (const meal of scrapedData.meals) {
-    html += `<div class="preview-meal">`;
-    html += `<div class="preview-meal-title">${meal.name}</div>`;
+    html += `<div class="preview-meal" style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;">`;
+    html += `<div class="preview-meal-title" style="font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em;">${meal.name}</div>`;
     
     for (const food of meal.foods) {
-      html += `<div class="preview-food-item" style="display: flex; flex-direction: column; margin-bottom: 8px;">
-        <div style="display: flex; justify-content: space-between; font-weight: 500;">
+      html += `<div class="preview-food-item" style="display: flex; flex-direction: column; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+        <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 13px; color: #fff;">
           <span class="preview-food-name">${food.name}</span>
           <span class="preview-food-amount">${food.amount} ${food.unit}</span>
         </div>
         ${food.calories > 0 ? `
-        <div style="font-size: 0.8em; color: #94A3B8; margin-top: 2px;">
-          ${food.calories}kcal | ${food.protein}P | ${food.carbs}C | ${food.fat}F
+        <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px; font-weight: 500;">
+          ${food.calories} kcal | ${food.protein}P | ${food.carbs}C | ${food.fat}F
         </div>` : ''}
       </div>`;
     }
     
     if (meal.macros.calories > 0) {
-      html += `<div class="preview-macros" style="border-top: 1px solid #334155; padding-top: 6px; margin-top: 6px; font-weight: bold; color: #10B981;">
-        MEAL TOTAL: ${meal.macros.calories} kcal | ${meal.macros.protein}P | ${meal.macros.carbs}C | ${meal.macros.fat}F
+      html += `<div class="meal-total" style="padding-top: 4px; font-weight: 700; color: var(--success); font-size: 12px; display: flex; justify-content: space-between;">
+        <span>MEAL TOTAL</span>
+        <span>${meal.macros.calories} kcal | ${meal.macros.protein}P | ${meal.macros.carbs}C | ${meal.macros.fat}F</span>
       </div>`;
     }
     
@@ -172,21 +173,20 @@ function updateStats() {
   document.getElementById('statFoods').textContent = totalFoods;
   document.getElementById('statCalories').textContent = scrapedData.dayTotal.calories || '—';
   
-  // Opcjonalnie: zaktualizuj też etykiety makro jeśli je dodaliśmy
   const statGrid = document.querySelector('.stats-grid');
   if (statGrid && !document.getElementById('statProtein')) {
     const macrosHtml = `
       <div class="stat-item">
         <span class="stat-value" id="statProtein">${scrapedData.dayTotal.protein || 0}</span>
-        <span class="stat-label">P(g)</span>
+        <span class="stat-label">Prot (g)</span>
       </div>
       <div class="stat-item">
         <span class="stat-value" id="statCarbs">${scrapedData.dayTotal.carbs || 0}</span>
-        <span class="stat-label">C(g)</span>
+        <span class="stat-label">Carb (g)</span>
       </div>
       <div class="stat-item">
         <span class="stat-value" id="statFat">${scrapedData.dayTotal.fat || 0}</span>
-        <span class="stat-label">F(g)</span>
+        <span class="stat-label">Fat (g)</span>
       </div>
     `;
     statGrid.innerHTML += macrosHtml;
